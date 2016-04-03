@@ -1,5 +1,7 @@
 package com.carlospontual.twitch.list.data.models;
 
+import com.squareup.moshi.Json;
+
 /**
  * Created by carlospontual on 02/04/16.
  */
@@ -7,11 +9,12 @@ public class Game {
     public final int viewers;
     public final int channels;
 
-    public final GameData game;
+    @Json(name = "game")
+    public final GameData gameData;
 
-    public Game(int viewers, int channels, GameData game) {
+    public Game(int viewers, int channels, GameData gameData) {
         this.viewers = viewers;
         this.channels = channels;
-        this.game = game;
+        this.gameData = gameData;
     }
 }

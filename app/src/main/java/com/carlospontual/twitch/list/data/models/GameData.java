@@ -1,22 +1,31 @@
 package com.carlospontual.twitch.list.data.models;
 
+import com.squareup.moshi.Json;
+
 /**
  * Created by carlospontual on 02/04/16.
  */
 public class GameData {
 
     public final String name;
+    @Json(name = "_id")
     public final int id;
-    public final int giantbomb_id;
+    @Json(name = "giantbomb_id")
+    public final int giantbombId;
+    @Json(name = "box")
+    public final Images boxImages;
+    @Json(name = "logo")
+    public final Images logoImages;
+    @Json(name = "_links")
+    public final GameLinks links;
 
-    public final Images boxImages, logoImages;
-
-    public GameData(String name, int id, int giantbomb_id, Images boxImages, Images logoImages) {
+    public GameData(String name, int id, int giantbombId, Images boxImages, Images logoImages, GameLinks links) {
         this.name = name;
         this.id = id;
-        this.giantbomb_id = giantbomb_id;
+        this.giantbombId = giantbombId;
         this.boxImages = boxImages;
         this.logoImages = logoImages;
+        this.links = links;
     }
 
     public static class Images {
