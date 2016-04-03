@@ -33,13 +33,14 @@
 
             <TextView
                 android:id="@+id/txt_game_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/img_game"
-                android:layout_margin="@dimen/cards_margin"
+                android:padding="@dimen/cards_margin"
                 android:textSize="@dimen/game_card_title_font_size"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:background="@drawable/gradient_card_name_bg"
                 android:textColor="@android:color/white"
                 tools:text="Counter Strike"
                 />

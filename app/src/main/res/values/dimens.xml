@@ -4,7 +4,12 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <!-- Game Card -->
     <dimen name="cards_margin">5dp</dimen>
     <dimen name="game_card_rounded_corner">2dp</dimen>
     <dimen name="game_card_title_font_size">12sp</dimen>
+
+    <!-- Game Empty Card -->
+    <dimen name="cards_empty_text_padding">20dp</dimen>
+    <dimen name="game_empty_card_font_size">16sp</dimen>
 </resources>

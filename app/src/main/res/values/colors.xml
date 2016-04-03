@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="game_card_bg">#696969</color>
+    <color name="game_card_title_gradient_bg_start">#FF000000</color>
+    <color name="game_card_title_gradient_bg_end">#00000000</color>
 </resources>

@@ -36,10 +36,16 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
     public GameListAdapter(Context context, List<Game> games) {
         this.context = context;
         this.games = games;
-        picasso = new Picasso.Builder(context).downloader(new OkHttp3Downloader(context, Integer.MAX_VALUE)).build();
-        if (BuildConfig.DEBUG) {
-            picasso.setIndicatorsEnabled(true);
+    }
+
+    Picasso getPicasso() {
+        if (picasso == null) {
+            picasso = new Picasso.Builder(context).downloader(new OkHttp3Downloader(context, Integer.MAX_VALUE)).build();
+            if (BuildConfig.DEBUG) {
+                picasso.setIndicatorsEnabled(true);
+            }
         }
+        return picasso;
     }
 
     public void setGames(List<Game> games) {
@@ -71,6 +77,10 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
         return games == null || games.size() == 0;
     }
 
+    void bindViews(Object target, View view) {
+        ButterKnife.bind(target, view);
+    }
+
     public class GameViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.img_game)
         ImageView cover;
@@ -79,16 +89,12 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
 
         public GameViewHolder(View itemView) {
             super(itemView);
-            bindViews(itemView);
-        }
-
-        private void bindViews(View itemView) {
-            ButterKnife.bind(this, itemView);
+            bindViews(this, itemView);
         }
 
         public void populate(GameData gameData) {
             if (gameData.boxImages.large != null && !gameData.boxImages.large.isEmpty()) {
-                picasso.load(gameData.boxImages.large)
+                getPicasso().load(gameData.boxImages.large)
                         .placeholder(R.drawable.camera_loading)
                         .into(cover);
             }
