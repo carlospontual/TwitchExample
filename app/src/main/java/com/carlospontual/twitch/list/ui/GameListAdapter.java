@@ -70,8 +70,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
             if (gameData.boxImages.large != null && !gameData.boxImages.large.isEmpty()) {
                 picasso.setIndicatorsEnabled(true);
                 picasso.load(gameData.boxImages.large)
-                        .placeholder(android.R.drawable.ic_menu_camera)
-                        .error(android.R.drawable.ic_menu_camera)
+                        .placeholder(R.drawable.camera_loading)
                         .into(cover);
             }
             title.setText(gameData.name);
