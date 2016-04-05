@@ -2,10 +2,12 @@ package com.carlospontual.twitch.list.data.models;
 
 import com.squareup.moshi.Json;
 
+import java.io.Serializable;
+
 /**
  * Created by carlospontual on 02/04/16.
  */
-public class GameData {
+public class GameData implements Serializable {
 
     public final String name;
     @Json(name = "_id")
@@ -28,7 +30,7 @@ public class GameData {
         this.links = links;
     }
 
-    public static class Images {
+    public static class Images implements Serializable {
         public final String large, medium, small, template;
 
         public Images(String large, String medium, String small, String template) {
