@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by carlospontual on 03/04/16.
@@ -28,14 +29,16 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
     List<Game> games;
     Context context;
     Picasso picasso;
+    OnGameSelectedListener listener;
 
-    public GameListAdapter(Context context) {
-        this(context, null);
+    public GameListAdapter(Context context, OnGameSelectedListener listener) {
+        this(context, null, listener);
     }
 
-    public GameListAdapter(Context context, List<Game> games) {
+    public GameListAdapter(Context context, List<Game> games, OnGameSelectedListener listener) {
         this.context = context;
         this.games = games;
+        this.listener = listener;
     }
 
     Picasso getPicasso() {
@@ -64,8 +67,10 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
 
     @Override
     public void onBindViewHolder(GameViewHolder holder, int position) {
-        Game currentGame = games.get(position);
-        holder.populate(currentGame.gameData);
+        if (games != null) {
+            Game currentGame = games.get(position);
+            holder.populate(currentGame);
+        }
     }
 
     @Override
@@ -86,19 +91,33 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
         ImageView cover;
         @Bind(R.id.txt_game_title)
         TextView title;
+        Game game;
+
 
         public GameViewHolder(View itemView) {
             super(itemView);
             bindViews(this, itemView);
         }
 
-        public void populate(GameData gameData) {
-            if (gameData.boxImages.large != null && !gameData.boxImages.large.isEmpty()) {
-                getPicasso().load(gameData.boxImages.large)
+        public void populate(Game game) {
+            this.game = game;
+            if (game.gameData.boxImages.large != null && !game.gameData.boxImages.large.isEmpty()) {
+                getPicasso().load(game.gameData.boxImages.large)
                         .placeholder(R.drawable.camera_loading)
                         .into(cover);
             }
-            title.setText(gameData.name);
+            title.setText(game.gameData.name);
         }
+
+        @OnClick(R.id.card_view)
+        public void onGameClick() {
+            if (listener != null) {
+                listener.onGameClicked(game);
+            }
+        }
+    }
+
+    public interface OnGameSelectedListener {
+        void onGameClicked(Game game);
     }
 }

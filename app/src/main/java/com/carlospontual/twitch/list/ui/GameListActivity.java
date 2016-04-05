@@ -23,7 +23,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GameListActivity extends AppCompatActivity implements GameListContract.View {
+public class GameListActivity extends AppCompatActivity implements GameListContract.View,
+        GameListAdapter.OnGameSelectedListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -60,7 +61,7 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
         setSupportActionBar(toolbar);
         presenter = new GameListPresenter(this);
         recycler.setLayoutManager(new GridLayoutManager(this, 2));
-        adapter = new GameListAdapter(this);
+        adapter = new GameListAdapter(this, this);
         recycler.setAdapter(adapter);
         swipeRefreshHack();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -162,6 +163,13 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
     public void refreshGames() {
         if (presenter != null) {
             presenter.refreshTopGames();
+        }
+    }
+
+    @Override
+    public void onGameClicked(Game game) {
+        if (presenter != null) {
+            presenter.onGameSelected(game);
         }
     }
 }
