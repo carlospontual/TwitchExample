@@ -12,4 +12,11 @@
     <!-- Game Empty Card -->
     <dimen name="cards_empty_text_padding">20dp</dimen>
     <dimen name="game_empty_card_font_size">16sp</dimen>
+
+    <!-- Game Details -->
+    <dimen name="game_details_margin">10dp</dimen>
+    <dimen name="game_details_card_title_font">20sp</dimen>
+    <dimen name="card_side_margin">16dp</dimen>
+    <dimen name="card_top_margin">24dp</dimen>
+
 </resources>

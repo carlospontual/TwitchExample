@@ -12,13 +12,24 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.GameListActivity"
-            android:label="@string/app_name"
+            android:label="@string/game_list_activity_title"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.GameDetailsActivity"
+            android:label="@string/game_details_activity_title"
+            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar"
+            android:parentActivityName=".ui.GameListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.GameListActivity" />
+            />
         </activity>
     </application>
 

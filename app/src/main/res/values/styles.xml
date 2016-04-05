@@ -13,8 +13,29 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.TransparentStatusBar"/>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">@dimen/card_side_margin</item>
+        <item name="android:paddingRight">@dimen/card_side_margin</item>
+        <item name="android:paddingTop">@dimen/card_top_margin</item>
+        <item name="android:paddingBottom">@dimen/card_top_margin</item>
+    </style>
+
+    <style name="GameDetailsLabel">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/game_empty_card_font_size</item>
+    </style>
+
+    <style name="GameDetailsLabel.CardTitle">
+        <item name="android:textSize">@dimen/game_details_card_title_font</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_marginBottom">@dimen/game_details_margin</item>
+    </style>
 
 </resources>

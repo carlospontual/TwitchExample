@@ -1,6 +1,14 @@
 <resources>
-    <string name="app_name">Twitch List</string>
+    <string name="app_name">Twitch Top 50</string>
+    <string name="game_list_activity_title">Twitch Top 50 Games</string>
     <string name="action_settings">Settings</string>
     <string name="game_empty_card_message">Nenhum jogo encontrado. Verifique seu acesso a internet e tente atualizar a listagem.</string>
     <string name="game_empty_reload">Atualizar</string>
+
+
+    <!-- Game Details -->
+    <string name="game_details_activity_title">Detalhes</string>
+    <string name="game_details_active_channels">Canais ativos:</string>
+    <string name="game_details_views">Visualizações:</string>
+    <string name="game_details_box">Imagem de Caixa</string>
 </resources>

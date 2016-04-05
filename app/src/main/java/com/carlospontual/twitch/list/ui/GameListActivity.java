@@ -1,5 +1,6 @@
 package com.carlospontual.twitch.list.ui;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -146,7 +147,11 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
 
     @Override
     public void showGameDetails(Game game) {
-
+        Intent gameDetails = new Intent(this, GameDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Game.GAME_TAG, game);
+        gameDetails.putExtras(bundle);
+        startActivity(gameDetails);
     }
 
     @Override

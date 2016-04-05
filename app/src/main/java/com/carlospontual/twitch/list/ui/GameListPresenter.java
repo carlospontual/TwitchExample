@@ -61,6 +61,8 @@ public class GameListPresenter implements GameListContract.Presenter, ResponseHa
 
     @Override
     public void onGameSelected(Game game) {
-
+        if (view != null) {
+            view.showGameDetails(game);
+        }
     }
 }
