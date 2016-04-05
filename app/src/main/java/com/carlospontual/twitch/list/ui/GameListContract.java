@@ -1,7 +1,6 @@
 package com.carlospontual.twitch.list.ui;
 
 import com.carlospontual.twitch.list.data.models.Game;
-import com.carlospontual.twitch.list.data.models.TopGames;
 
 import java.util.List;
 
