@@ -9,7 +9,9 @@ This project implementation is based on Model View Presenter (MVP) architecture.
 * Retrofit 2.0 for network communication;
 * Dagger 2 for dependency injection;
 * Butterknife for View injection;
+* PaperDB for Cache (Offline data);
 * JUnit 4 for Unit Tests;
+* Pull to Refresh (Google's SwipeRefreshLayout)
 
 # Setup #
 
