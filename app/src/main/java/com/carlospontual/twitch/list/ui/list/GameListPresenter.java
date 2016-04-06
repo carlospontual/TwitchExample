@@ -53,11 +53,9 @@ public class GameListPresenter implements GameListContract.Presenter, ResponseHa
     public void onError(int responseCode, String message) {
         view.dismissRefreshing();
         view.showError();
-        //TODO: use cache here if response is malformatted.
         if (isCacheEmpty(topGamesCache)) {
             view.showEmptyResult();
         }
-
     }
 
     @Override
