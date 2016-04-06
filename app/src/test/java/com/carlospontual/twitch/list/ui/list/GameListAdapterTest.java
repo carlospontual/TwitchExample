@@ -1,4 +1,4 @@
-package com.carlospontual.twitch.list.ui;
+package com.carlospontual.twitch.list.ui.list;
 
 import android.content.Context;
 import android.test.mock.MockContext;
@@ -11,6 +11,7 @@ import com.carlospontual.twitch.list.MockHelpers;
 import com.carlospontual.twitch.list.data.models.Game;
 import com.carlospontual.twitch.list.data.models.GameData;
 import com.carlospontual.twitch.list.data.models.TopGames;
+import com.carlospontual.twitch.list.ui.list.GameListAdapter;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
@@ -51,11 +52,13 @@ public class GameListAdapterTest {
     Picasso picasso;
     @Mock
     View inflatedView;
+    @Mock
+    GameListAdapter.OnGameSelectedListener listener;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this); //TODO: remove if not used
-        adapter = new GameListAdapter(mock(Context.class));
+        adapter = new GameListAdapter(mock(Context.class), listener);
         adapter.picasso = picasso;
         spyAdapter = spy(adapter);
         doReturn(inflatedView).when(spyAdapter).inflateView(anyInt(), any(ViewGroup.class), anyBoolean());
@@ -75,7 +78,7 @@ public class GameListAdapterTest {
         GameListAdapter.GameViewHolder holder = mock(GameListAdapter.GameViewHolder.class);
         spyAdapter.games = topGames.games;
         spyAdapter.onBindViewHolder(holder, 1);
-        verify(holder, times(1)).populate(topGames.games.get(1).gameData);
+        verify(holder, times(1)).populate(topGames.games.get(1));
         verifyNoMoreInteractions(holder);
     }
 
@@ -105,20 +108,29 @@ public class GameListAdapterTest {
 
     @Test
     public void GameVH_populate_should_load_image() {
-        GameData gameData = MockHelpers.mockData().games.get(1).gameData;
+        Game game = MockHelpers.mockData().games.get(1);
         RequestCreator creator = mock(RequestCreator.class);
-        GameListAdapter.GameViewHolder mockVH = prepareGameVH(gameData, creator);
-        mockVH.populate(gameData);
-        verify(picasso, times(1)).load(gameData.boxImages.large);
+        GameListAdapter.GameViewHolder mockVH = prepareGameVH(game.gameData, creator);
+        mockVH.populate(game);
+        verify(picasso, times(1)).load(game.gameData.boxImages.large);
         verify(creator, times(1)).into(mockVH.cover);
     }
 
     @Test
     public void GameVH_populate_should_set_title() {
-        GameData gameData = MockHelpers.mockData().games.get(1).gameData;
-        GameListAdapter.GameViewHolder mockVH = prepareGameVH(gameData, null);
-        mockVH.populate(gameData);
-        verify(mockVH.title, times(1)).setText(gameData.name);
+        Game game = MockHelpers.mockData().games.get(1);
+        GameListAdapter.GameViewHolder mockVH = prepareGameVH(game.gameData, null);
+        mockVH.populate(game);
+        verify(mockVH.title, times(1)).setText(game.gameData.name);
+    }
+
+    @Test
+    public void GameVH_click_should_call_listener() {
+        Game game = MockHelpers.mockData().games.get(1);
+        GameListAdapter.GameViewHolder mockVH = prepareGameVH(game.gameData, null);
+        mockVH.populate(game);
+        mockVH.onGameClick();
+        verify(listener, times(1)).onGameClicked(game);
     }
 
     private GameListAdapter.GameViewHolder prepareGameVH(GameData gameData, RequestCreator creator) {

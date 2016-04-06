@@ -1,4 +1,4 @@
-package com.carlospontual.twitch.list.ui;
+package com.carlospontual.twitch.list.ui.list;
 
 import com.carlospontual.twitch.list.data.models.Game;
 

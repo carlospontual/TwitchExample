@@ -1,4 +1,4 @@
-package com.carlospontual.twitch.list.ui;
+package com.carlospontual.twitch.list.ui.list;
 
 import android.content.Intent;
 import android.os.Build;
@@ -17,6 +17,7 @@ import android.view.ViewTreeObserver;
 
 import com.carlospontual.twitch.list.R;
 import com.carlospontual.twitch.list.data.models.Game;
+import com.carlospontual.twitch.list.ui.GameDetailsActivity;
 
 import java.util.List;
 

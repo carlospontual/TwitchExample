@@ -1,4 +1,4 @@
-package com.carlospontual.twitch.list.ui;
+package com.carlospontual.twitch.list.ui.details;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

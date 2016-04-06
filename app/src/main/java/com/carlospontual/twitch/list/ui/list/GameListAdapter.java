@@ -1,4 +1,4 @@
-package com.carlospontual.twitch.list.ui;
+package com.carlospontual.twitch.list.ui.list;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.carlospontual.twitch.list.BuildConfig;
 import com.carlospontual.twitch.list.R;
 import com.carlospontual.twitch.list.data.models.Game;
-import com.carlospontual.twitch.list.data.models.GameData;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
