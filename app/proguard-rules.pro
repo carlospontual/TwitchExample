@@ -36,3 +36,6 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
+#PaperDB models
+-keep class com.carlospontual.twitch.list.data.models.** { *; }

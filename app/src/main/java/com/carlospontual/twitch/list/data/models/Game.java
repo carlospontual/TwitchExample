@@ -16,6 +16,10 @@ public class Game implements Serializable {
     @Json(name = "game")
     public final GameData gameData;
 
+    public Game() {
+        this(0, 0, null);
+    }
+
     public Game(int viewers, int channels, GameData gameData) {
         this.viewers = viewers;
         this.channels = channels;

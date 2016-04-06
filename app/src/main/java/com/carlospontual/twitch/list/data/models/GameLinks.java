@@ -8,6 +8,10 @@ import java.io.Serializable;
 public class GameLinks implements Serializable {
     public final String self, next;
 
+    public GameLinks() {
+        this(null, null);
+    }
+
     public GameLinks(String self, String next) {
         this.self = self;
         this.next = next;

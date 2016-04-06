@@ -21,6 +21,10 @@ public class GameData implements Serializable {
     @Json(name = "_links")
     public final GameLinks links;
 
+    public GameData() {
+        this(null, 0, 0, null, null, null);
+    }
+
     public GameData(String name, int id, int giantbombId, Images boxImages, Images logoImages, GameLinks links) {
         this.name = name;
         this.id = id;
@@ -32,6 +36,10 @@ public class GameData implements Serializable {
 
     public static class Images implements Serializable {
         public final String large, medium, small, template;
+
+        public Images() {
+            this(null, null, null, null);
+        }
 
         public Images(String large, String medium, String small, String template) {
             this.large = large;
