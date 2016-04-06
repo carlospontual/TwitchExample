@@ -28,6 +28,12 @@ public class GameListPresenter implements GameListContract.Presenter, ResponseHa
         inject();
     }
 
+    void inject() {
+        if (TwitchTopGames.getInstance() != null) {
+            TwitchTopGames.getInstance().getAppComponent().inject(this);
+        }
+    }
+
     @Override
     public void onSuccess(TopGames response) {
         if (view != null) {
@@ -48,7 +54,7 @@ public class GameListPresenter implements GameListContract.Presenter, ResponseHa
         view.dismissRefreshing();
         view.showError();
         //TODO: use cache here if response is malformatted.
-        if (topGamesCache == null || topGamesCache.games.isEmpty()) {
+        if (isCacheEmpty(topGamesCache)) {
             view.showEmptyResult();
         }
 
@@ -60,18 +66,12 @@ public class GameListPresenter implements GameListContract.Presenter, ResponseHa
         refreshTopGames();
     }
 
-    void inject() {
-        if (TwitchTopGames.getInstance() != null) {
-            TwitchTopGames.getInstance().getAppComponent().inject(this);
-        }
-    }
-
     TopGames retrieveCache() {
         TopGames topGames = gamesCache.retrieve();
-        if (topGames != null && !topGames.games.isEmpty()) {
+        if (!isCacheEmpty(topGames)) {
             view.updateTopGames(topGames.games);
         } else {
-            //Show loading screen
+            view.showLoadingFirst();
         }
         return topGames;
     }
@@ -80,8 +80,15 @@ public class GameListPresenter implements GameListContract.Presenter, ResponseHa
     public void refreshTopGames() {
         if (view != null) {
             view.showRefreshing();
+            if (isCacheEmpty(topGamesCache)) {
+                view.showLoadingFirst();
+            }
             apiServices.getGames(this, true);
         }
+    }
+
+    boolean isCacheEmpty(TopGames topGamesCache) {
+        return topGamesCache == null || topGamesCache.games.isEmpty();
     }
 
     @Override

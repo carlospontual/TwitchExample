@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.carlospontual.twitch.list.R;
 import com.carlospontual.twitch.list.data.models.Game;
@@ -38,6 +41,13 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
     SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.lyt_empty_list)
     View emptyView;
+    @Bind(R.id.img_empty_list)
+    ImageView emptyViewImage;
+    @Bind(R.id.lyt_empty_text)
+    View emptyViewText;
+    @Bind(R.id.pgr_first_load)
+    ProgressBar progressFirstLoad;
+
 
     GameListAdapter adapter;
     GameListContract.Presenter presenter;
@@ -72,6 +82,8 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
                 refreshGames();
             }
         });
+        swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(this, R.color.colorAccent), 0, 0, 0);
     }
 
     private void swipeRefreshHack() {
@@ -156,7 +168,20 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
 
     @Override
     public void showEmptyResult() {
+        showEmptyErroScreen(false);
+    }
+
+    @Override
+    public void showLoadingFirst() {
+        showEmptyErroScreen(true);
+    }
+
+    void showEmptyErroScreen(boolean isFirstLoading) {
         toggleListVisibility(false);
+        emptyViewImage.setImageResource(isFirstLoading ? R.drawable.img_cloud_sync
+                : R.drawable.img_cloud_error_sync);
+        emptyViewText.setVisibility(isFirstLoading ? View.INVISIBLE : View.VISIBLE);
+        progressFirstLoad.setVisibility(isFirstLoading ? View.VISIBLE : View.GONE);
     }
 
     private void toggleListVisibility(boolean isListVisible) {

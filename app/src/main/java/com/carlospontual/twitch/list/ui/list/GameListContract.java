@@ -16,6 +16,7 @@ public class GameListContract {
         void updateTopGames(List<Game> games);
         void showGameDetails(Game game);
         void showEmptyResult();
+        void showLoadingFirst();
     }
 
     interface Presenter {
