@@ -11,4 +11,5 @@
     <string name="game_details_active_channels">Canais ativos:</string>
     <string name="game_details_views">Visualizações:</string>
     <string name="game_details_box">Imagem de Caixa</string>
+    <string name="game_list_error_offline">Erro ao Atualizar - Trabalhando Offline</string>
 </resources>

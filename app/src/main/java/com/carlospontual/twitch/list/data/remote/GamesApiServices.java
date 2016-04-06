@@ -2,6 +2,8 @@ package com.carlospontual.twitch.list.data.remote;
 
 import com.carlospontual.twitch.list.data.models.TopGames;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,6 +18,7 @@ public class GamesApiServices {
 
     private Call<TopGames> currentCall;
 
+    @Inject
     public GamesApiServices(RetrofitClient retrofitClient) {
         gamesApi = retrofitClient.create(GamesApi.class);
     }

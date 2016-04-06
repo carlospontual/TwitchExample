@@ -11,7 +11,6 @@ import com.carlospontual.twitch.list.MockHelpers;
 import com.carlospontual.twitch.list.data.models.Game;
 import com.carlospontual.twitch.list.data.models.GameData;
 import com.carlospontual.twitch.list.data.models.TopGames;
-import com.carlospontual.twitch.list.ui.list.GameListAdapter;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
@@ -62,7 +61,8 @@ public class GameListAdapterTest {
         adapter.picasso = picasso;
         spyAdapter = spy(adapter);
         doReturn(inflatedView).when(spyAdapter).inflateView(anyInt(), any(ViewGroup.class), anyBoolean());
-        doReturn(picasso).when(spyAdapter).getPicasso();
+//        doReturn(picasso).when(spyAdapter).getPicasso();
+        spyAdapter.picasso = picasso;
         doNothing().when(spyAdapter).bindViews(anyObject(), any(View.class));
     }
 

@@ -17,7 +17,7 @@ import android.view.ViewTreeObserver;
 
 import com.carlospontual.twitch.list.R;
 import com.carlospontual.twitch.list.data.models.Game;
-import com.carlospontual.twitch.list.ui.GameDetailsActivity;
+import com.carlospontual.twitch.list.ui.details.GameDetailsActivity;
 
 import java.util.List;
 
@@ -134,8 +134,7 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
 
     @Override
     public void showError() {
-        Snackbar.make(fab, "Error updating content", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        Snackbar.make(fab, R.string.game_list_error_offline, Snackbar.LENGTH_LONG).show();
     }
 
     @Override

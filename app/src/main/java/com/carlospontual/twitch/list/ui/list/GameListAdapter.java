@@ -10,11 +10,14 @@ import android.widget.TextView;
 
 import com.carlospontual.twitch.list.BuildConfig;
 import com.carlospontual.twitch.list.R;
+import com.carlospontual.twitch.list.TwitchTopGames;
 import com.carlospontual.twitch.list.data.models.Game;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,8 +30,11 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
 
     List<Game> games;
     Context context;
-    Picasso picasso;
+
     OnGameSelectedListener listener;
+
+    @Inject
+    Picasso picasso;
 
     public GameListAdapter(Context context, OnGameSelectedListener listener) {
         this(context, null, listener);
@@ -38,16 +44,13 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
         this.context = context;
         this.games = games;
         this.listener = listener;
+        inject();
     }
 
-    Picasso getPicasso() {
-        if (picasso == null) {
-            picasso = new Picasso.Builder(context).downloader(new OkHttp3Downloader(context, Integer.MAX_VALUE)).build();
-            if (BuildConfig.DEBUG) {
-                picasso.setIndicatorsEnabled(true);
-            }
+    void inject() {
+        if (TwitchTopGames.getInstance() != null) {
+            TwitchTopGames.getInstance().getAppComponent().inject(this);
         }
-        return picasso;
     }
 
     public void setGames(List<Game> games) {
@@ -101,7 +104,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
         public void populate(Game game) {
             this.game = game;
             if (game.gameData.boxImages.large != null && !game.gameData.boxImages.large.isEmpty()) {
-                getPicasso().load(game.gameData.boxImages.large)
+                picasso.load(game.gameData.boxImages.large)
                         .placeholder(R.drawable.camera_loading)
                         .into(cover);
             }

@@ -53,6 +53,12 @@ dependencies {
     compile 'io.paperdb:paperdb:1.1'
     //
 
+    //Dagger
+    compile 'com.google.dagger:dagger:2.0'
+    apt 'com.google.dagger:dagger-compiler:2.0'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+    //
+
     //Unit tests
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.10.19"
