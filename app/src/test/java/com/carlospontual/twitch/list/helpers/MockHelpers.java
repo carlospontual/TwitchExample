@@ -1,4 +1,4 @@
-package com.carlospontual.twitch.list;
+package com.carlospontual.twitch.list.helpers;
 
 import com.carlospontual.twitch.list.data.models.TopGames;
 import com.squareup.moshi.JsonAdapter;
