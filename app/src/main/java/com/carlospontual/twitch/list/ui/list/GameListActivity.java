@@ -3,7 +3,6 @@ package com.carlospontual.twitch.list.ui.list;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -20,9 +17,15 @@ import android.widget.ProgressBar;
 
 import com.carlospontual.twitch.list.R;
 import com.carlospontual.twitch.list.data.models.Game;
+import com.carlospontual.twitch.list.injection.PerActivity;
+import com.carlospontual.twitch.list.injection.ui.DaggerGameListPresenterComponent;
+import com.carlospontual.twitch.list.injection.ui.GameListPresenterComponent;
+import com.carlospontual.twitch.list.injection.ui.GameListPresenterModule;
 import com.carlospontual.twitch.list.ui.details.GameDetailsActivity;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,8 +38,6 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
     Toolbar toolbar;
     @Bind(R.id.recycler)
     RecyclerView recycler;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
     @Bind(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.lyt_empty_list)
@@ -48,30 +49,29 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
     @Bind(R.id.pgr_first_load)
     ProgressBar progressFirstLoad;
 
+    @PerActivity @Inject
+    GameListContract.Presenter presenter;
 
     GameListAdapter adapter;
-    GameListContract.Presenter presenter;
-    boolean refreshing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        getComponent().inject(this);
+
         initViews();
         if (presenter != null) {
             presenter.onCreate();
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     private void initViews() {
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        presenter = new GameListPresenter(this);
+        if (getSupportActionBar() == null) {
+            setSupportActionBar(toolbar);
+        }
         recycler.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new GameListAdapter(this, this);
         recycler.setAdapter(adapter);
@@ -104,49 +104,19 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
         });
     }
 
-    @OnClick(R.id.fab)
-    public void onFabClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void showRefreshing() {
-        refreshing = true;
         swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void dismissRefreshing() {
-        refreshing = false;
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showError() {
-        Snackbar.make(fab, R.string.game_list_error_offline, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(recycler, R.string.game_list_error_offline, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -168,15 +138,15 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
 
     @Override
     public void showEmptyResult() {
-        showEmptyErroScreen(false);
+        showEmptyErrorScreen(false);
     }
 
     @Override
     public void showLoadingFirst() {
-        showEmptyErroScreen(true);
+        showEmptyErrorScreen(true);
     }
 
-    void showEmptyErroScreen(boolean isFirstLoading) {
+    void showEmptyErrorScreen(boolean isFirstLoading) {
         toggleListVisibility(false);
         emptyViewImage.setImageResource(isFirstLoading ? R.drawable.img_cloud_sync
                 : R.drawable.img_cloud_error_sync);
@@ -184,7 +154,7 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
         progressFirstLoad.setVisibility(isFirstLoading ? View.VISIBLE : View.GONE);
     }
 
-    private void toggleListVisibility(boolean isListVisible) {
+    void toggleListVisibility(boolean isListVisible) {
         swipeRefreshLayout.setVisibility(isListVisible ? View.VISIBLE : View.GONE);
         emptyView.setVisibility(isListVisible ? View.GONE : View.VISIBLE);
     }
@@ -201,5 +171,11 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
         if (presenter != null) {
             presenter.onGameSelected(game);
         }
+    }
+
+    GameListPresenterComponent getComponent() {
+        return DaggerGameListPresenterComponent.builder()
+                .gameListPresenterModule(new GameListPresenterModule(this))
+                .build();
     }
 }
