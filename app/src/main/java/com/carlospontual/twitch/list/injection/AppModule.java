@@ -31,11 +31,8 @@ public class AppModule {
     @Provides
     @Singleton
     public Picasso providesPicasso(TwitchTopGames application) {
-        Picasso picasso = new Picasso.Builder(application).downloader(new OkHttp3Downloader(application, Integer.MAX_VALUE)).build();
-        if (BuildConfig.DEBUG) {
-            picasso.setIndicatorsEnabled(true);
-        }
-        return picasso;
+        return new Picasso.Builder(application).downloader(new OkHttp3Downloader(application, Integer.MAX_VALUE))
+                .build();
     }
 
     @Provides
