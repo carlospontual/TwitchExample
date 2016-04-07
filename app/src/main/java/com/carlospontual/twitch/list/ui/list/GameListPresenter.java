@@ -23,6 +23,7 @@ public class GameListPresenter implements GameListContract.Presenter, ResponseHa
 
     TopGames topGamesCache;
 
+    @Inject
     public GameListPresenter(GameListContract.View view) {
         this.view = view;
         inject();

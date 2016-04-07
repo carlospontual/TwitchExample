@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.carlospontual.twitch.list.BuildConfig;
 import com.carlospontual.twitch.list.R;
 import com.carlospontual.twitch.list.TwitchTopGames;
 import com.carlospontual.twitch.list.data.models.Game;
-import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

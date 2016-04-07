@@ -1,12 +1,10 @@
 package com.carlospontual.twitch.list.ui.list;
 
-import com.carlospontual.twitch.list.MockHelpers;
 import com.carlospontual.twitch.list.data.cache.GamesCache;
 import com.carlospontual.twitch.list.data.models.Game;
 import com.carlospontual.twitch.list.data.models.TopGames;
 import com.carlospontual.twitch.list.data.remote.GamesApiServices;
-import com.carlospontual.twitch.list.ui.list.GameListContract;
-import com.carlospontual.twitch.list.ui.list.GameListPresenter;
+import com.carlospontual.twitch.list.helpers.MockHelpers;
 
 import org.junit.Before;
 import org.junit.Test;

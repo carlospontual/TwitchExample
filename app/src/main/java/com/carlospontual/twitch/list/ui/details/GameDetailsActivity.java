@@ -46,8 +46,11 @@ public class GameDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.game_details_activity);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
 
         inject();
 
@@ -70,7 +73,7 @@ public class GameDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void populate() {
+    void populate() {
         GameData gameData = currentGame.gameData;
         if (gameData.logoImages != null && gameData.logoImages.large != null) {
             picasso.load(gameData.logoImages.large)

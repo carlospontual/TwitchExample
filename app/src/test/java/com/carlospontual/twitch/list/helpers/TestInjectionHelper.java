@@ -6,8 +6,6 @@ import com.carlospontual.twitch.list.data.remote.GamesApiServices;
 import com.carlospontual.twitch.list.data.remote.RetrofitClient;
 import com.carlospontual.twitch.list.injection.AppComponent;
 import com.carlospontual.twitch.list.injection.ui.GameListPresenterComponent;
-import com.carlospontual.twitch.list.injection.ui.GameListPresenterModule;
-import com.carlospontual.twitch.list.ui.details.GameDetailsActivity;
 import com.carlospontual.twitch.list.ui.details.GameDetailsActivityTest;
 import com.carlospontual.twitch.list.ui.list.GameListActivityTest;
 import com.carlospontual.twitch.list.ui.list.GameListContract;

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class GameListContract {
 
-    interface View {
+    public interface View {
         void showRefreshing();
         void dismissRefreshing();
         void showError();
@@ -19,7 +19,7 @@ public class GameListContract {
         void showLoadingFirst();
     }
 
-    interface Presenter {
+    public interface Presenter {
         void onCreate();
         void refreshTopGames();
         void onDestroy();
