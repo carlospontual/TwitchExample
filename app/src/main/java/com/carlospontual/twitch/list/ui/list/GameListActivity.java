@@ -1,5 +1,6 @@
 package com.carlospontual.twitch.list.ui.list;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -86,6 +87,7 @@ public class GameListActivity extends AppCompatActivity implements GameListContr
                 ContextCompat.getColor(this, R.color.colorAccent), 0, 0, 0);
     }
 
+    @SuppressLint("Deprecation")
     private void swipeRefreshHack() {
         swipeRefreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
