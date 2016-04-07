@@ -26,5 +26,6 @@ If you want to build and run all unit tests, use `./gradlew clean assembleDebug 
 
 # Screen Captures #
 
-[[https://raw.githubusercontent.com/carlospontual/TwitchExample/master/images/game_list_activity.png|alt=octocat]]
-[[https://raw.githubusercontent.com/carlospontual/TwitchExample/master/images/game_details_activity.png|alt=octocat]]
+![](https://raw.githubusercontent.com/carlospontual/TwitchExample/master/images/game_list_activity.png)
+![](https://raw.githubusercontent.com/carlospontual/TwitchExample/master/images/game_details_activity.png)
+
