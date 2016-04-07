@@ -1,6 +1,7 @@
 general:
   artifacts:
     - /home/ubuntu/TwitchExample/app/build/outputs/apk/
+    - /home/ubuntu/TwitchExample/app/build/reports/tests/results/
 dependencies:
   pre:
     - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-23"
@@ -9,8 +10,3 @@ test:
   override:
     #Build and run Debug tests
     - ./gradlew assembleDebug testDebug
-    # Copy generated APK
-    - cp -r /home/ubuntu/TwitchExample/app/build/outputs/app-debug.apk $CIRCLE_ARTIFACTS
-    # Copy test results
-    - cp -r /home/ubuntu/TwitchExample/app/build/reports/tests/results/* $CIRCLE_TEST_REPORTS
-

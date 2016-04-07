@@ -1,8 +1,10 @@
 # TwitchExample
+![](https://circleci.com/gh/carlospontual/TwitchExample/tree/master.svg?style=shield&circle-token=:circle-token)
 Android example which consumes twitch API and lists twitch's top 50 games.
 
 Everything is 100% Android Native, built on Android Studio 2.0 (with Gradle). 
 This project implementation is based on Model View Presenter (MVP) architecture.
+CircleCi is used for continuous integration.
 
 # Libraries used 
 
