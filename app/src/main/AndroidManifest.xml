@@ -15,6 +15,7 @@
             android:name=".ui.list.GameListActivity"
             android:label="@string/game_list_activity_title"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -26,6 +27,7 @@
             android:name=".ui.details.GameDetailsActivity"
             android:label="@string/game_details_activity_title"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.list.GameListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
