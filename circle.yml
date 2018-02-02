@@ -1,3 +1,6 @@
+machine:
+  java:
+    version: openjdk8
 general:
   artifacts:
     - /home/ubuntu/TwitchExample/app/build/outputs/apk/
