@@ -2,8 +2,11 @@ package com.carlospontual.twitch.list.helpers;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.design.internal.SnackbarContentLayout;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -12,7 +15,7 @@ import android.widget.FrameLayout;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 import org.robolectric.annotation.RealObject;
-import org.robolectric.internal.ShadowExtractor;
+import org.robolectric.shadow.api.Shadow;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -20,16 +23,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ShadowSnackbar - http://raptordigital.blogspot.com.br/2015/09/robolectric-and-custom-shadow-for.html
+ * ShadowSnackbar borrowed from
+ * https://medium.com/@jotaemepereira/android-tests-with-roboelectric-snackbarshadow-update-71681bc59e0f
  */
 
 @SuppressWarnings({"UnusedDeclaration", "Unchecked"})
 @Implements(Snackbar.class)
 public class ShadowSnackbar {
-    static List<ShadowSnackbar> shadowSnackbars = new ArrayList<>();
+
+    private static List<ShadowSnackbar> shadowSnackbars = new ArrayList<>();
 
     @RealObject
-    Snackbar snackbar;
+    private Snackbar snackbar;
 
     String text;
     private int duration;
@@ -39,13 +44,12 @@ public class ShadowSnackbar {
     private View view;
 
     @Implementation
-    public static Snackbar make(@NonNull View view, @NonNull CharSequence text, int duration) {
+    private static Snackbar make(@NonNull View view, @NonNull CharSequence text, int duration) {
         Snackbar snackbar = null;
 
         try {
-            Constructor<Snackbar> constructor = Snackbar.class.getDeclaredConstructor(ViewGroup.class);
+            Constructor<Snackbar> constructor = Snackbar.class.getDeclaredConstructor(ViewGroup.class, View.class, BaseTransientBottomBar.ContentViewCallback.class);
 
-            //just in case, maybe they'll change the method signature in the future
             if (null == constructor)
                 throw new IllegalArgumentException("Seems like the constructor was not found!");
 
@@ -54,7 +58,12 @@ public class ShadowSnackbar {
                 constructor.setAccessible(true);
             }
 
-            snackbar = constructor.newInstance(findSuitableParent(view));
+            ViewGroup parent = findSuitableParent(view);
+            final SnackbarContentLayout content =
+                    (SnackbarContentLayout)
+                            LayoutInflater.from(parent.getContext()).inflate(android.support.design.R.layout.design_layout_snackbar_include, parent, false);
+
+            snackbar = constructor.newInstance(parent, content, content);
             snackbar.setText(text);
             snackbar.setDuration(duration);
         } catch (Exception e) {
@@ -68,21 +77,26 @@ public class ShadowSnackbar {
         return snackbar;
     }
 
-    //this code is fetched from the decompiled Snackbar.class. 
     private static ViewGroup findSuitableParent(View view) {
         ViewGroup fallback = null;
-
         do {
             if (view instanceof CoordinatorLayout) {
                 return (ViewGroup) view;
-            }
-
-            if (view instanceof FrameLayout) {
-                fallback = (ViewGroup) view;
+            } else if (view instanceof FrameLayout) {
+                if (view.getId() == android.R.id.content) {
+                    return (ViewGroup) view;
+                } else {
+                    fallback = (ViewGroup) view;
+                }
             }
 
             if (view != null) {
-                ViewParent parent = view.getParent();
+                final ViewParent parent = view.getParent();
+
+                if (parent == null) {
+                    fallback = new FrameLayout(view.getContext());
+                }
+
                 view = parent instanceof View ? (View) parent : null;
             }
         } while (view != null);
@@ -90,31 +104,25 @@ public class ShadowSnackbar {
         return fallback;
     }
 
-    // this is one of the methods which your actual Android code might invoke
     @Implementation
     public static Snackbar make(@NonNull View view, @StringRes int resId, int duration) {
         return make(view, view.getResources().getText(resId), duration);
     }
 
 
-    //just a facilitator to get the shadow
-    static ShadowSnackbar shadowOf(Snackbar bar) {
-        return (ShadowSnackbar) ShadowExtractor.extract(bar);
+    private static ShadowSnackbar shadowOf(Snackbar bar) {
+        return Shadow.extract(bar);
     }
 
-    //handy for when running tests, empty the list of snackbars
     public static void reset() {
         shadowSnackbars.clear();
     }
 
-    //some non-Android related facilitators
     public static int shownSnackbarCount() {
         return shadowSnackbars.isEmpty() ? 0 : shadowSnackbars.size();
 
     }
 
-    //taken from the modus-operandus of the ShadowToast
-    //a facilitator to get the text of the latest created Snackbar
     public static String getTextOfLatestSnackbar() {
         if (!shadowSnackbars.isEmpty())
             return shadowSnackbars.get(shadowSnackbars.size() - 1).text;
@@ -122,7 +130,6 @@ public class ShadowSnackbar {
         return null;
     }
 
-    //retrieve the latest snackbar that was created
     public static Snackbar getLatestSnackbar() {
         if (!shadowSnackbars.isEmpty())
             return shadowSnackbars.get(shadowSnackbars.size() - 1).snackbar;

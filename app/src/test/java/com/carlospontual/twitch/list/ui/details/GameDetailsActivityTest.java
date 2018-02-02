@@ -14,10 +14,9 @@ import com.squareup.picasso.Picasso;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
-import org.robolectric.util.ActivityController;
 
 import javax.inject.Inject;
 
@@ -27,9 +26,9 @@ import static org.mockito.Mockito.spy;
 /**
  * Created by ccastro on 4/6/16.
  */
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class,
-        sdk = 21)
+        sdk = 27)
 public class GameDetailsActivityTest {
 
     GameDetailsActivity gameDetailsActivity, spyActivity;
@@ -49,8 +48,7 @@ public class GameDetailsActivityTest {
         bundle.putSerializable(Game.GAME_TAG, firstGame);
         intent.putExtras(bundle);
 
-        gameDetailsActivity = ActivityController.of(Robolectric.getShadowsAdapter(), GameDetailsActivity.class)
-                .withIntent(intent)
+        gameDetailsActivity = ActivityController.of(new GameDetailsActivity(), intent)
                 .create()
                 .get();
 

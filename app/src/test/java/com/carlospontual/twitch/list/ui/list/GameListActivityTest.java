@@ -18,12 +18,11 @@ import com.carlospontual.twitch.list.ui.details.GameDetailsActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
-import org.robolectric.internal.ShadowExtractor;
+import org.robolectric.shadow.api.Shadow;
 import org.robolectric.shadows.ShadowActivity;
-import org.robolectric.util.ActivityController;
 
 import javax.inject.Inject;
 
@@ -39,9 +38,9 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 /**
  * Created by carlospontual on 06/04/16.
  */
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class,
-        sdk = 21,
+        sdk = 27,
         shadows = {ShadowSnackbar.class})
 public class GameListActivityTest {
 
@@ -59,7 +58,7 @@ public class GameListActivityTest {
     @Before
     public void setUp() throws Exception {
         ((TestInjectionHelper.TestGameListPresenterComponent) getTestComponent()).inject(this);
-        activityController = ActivityController.of(Robolectric.getShadowsAdapter(), customActivity).setup();
+        activityController = ActivityController.of(customActivity).setup();
         robolectricActivity = activityController.get();
 
     }
@@ -92,7 +91,7 @@ public class GameListActivityTest {
 
     @Test
     public void showGameDetails_should_start_GameDetailsActivity() {
-        ShadowActivity shadowActivity = (ShadowActivity) ShadowExtractor.extract(robolectricActivity);
+        ShadowActivity shadowActivity = Shadow.extract(robolectricActivity);
         TopGames mockGames = MockHelpers.mockData();
         robolectricActivity.showGameDetails(mockGames.games.get(0));
 
