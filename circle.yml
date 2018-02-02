@@ -4,8 +4,8 @@ general:
     - /home/ubuntu/TwitchExample/app/build/reports/tests/results/
 dependencies:
   pre:
-    - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-23"
-    - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
+    - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-27"
+    - echo y | android update sdk --no-ui --all --filter "build-tools-27.0.2"
 test:
   override:
     #Build and run Debug tests
