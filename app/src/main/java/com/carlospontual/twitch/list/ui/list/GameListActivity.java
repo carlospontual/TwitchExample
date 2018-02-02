@@ -28,26 +28,26 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class GameListActivity extends AppCompatActivity implements GameListContract.View,
         GameListAdapter.OnGameSelectedListener {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.recycler)
+    @BindView(R.id.recycler)
     RecyclerView recycler;
-    @Bind(R.id.swipe_container)
+    @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
-    @Bind(R.id.lyt_empty_list)
+    @BindView(R.id.lyt_empty_list)
     View emptyView;
-    @Bind(R.id.img_empty_list)
+    @BindView(R.id.img_empty_list)
     ImageView emptyViewImage;
-    @Bind(R.id.lyt_empty_text)
+    @BindView(R.id.lyt_empty_text)
     View emptyViewText;
-    @Bind(R.id.pgr_first_load)
+    @BindView(R.id.pgr_first_load)
     ProgressBar progressFirstLoad;
 
     @PerActivity @Inject

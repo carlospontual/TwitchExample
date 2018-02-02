@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -22,17 +22,17 @@ import butterknife.ButterKnife;
  */
 public class GameDetailsActivity extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.img_game_logo)
+    @BindView(R.id.img_game_logo)
     ImageView imgGameLogo;
-    @Bind(R.id.txt_game_title)
+    @BindView(R.id.txt_game_title)
     TextView gameTitle;
-    @Bind(R.id.txt_game_channels)
+    @BindView(R.id.txt_game_channels)
     TextView gameChannels;
-    @Bind(R.id.txt_game_views)
+    @BindView(R.id.txt_game_views)
     TextView gameViews;
-    @Bind(R.id.img_game)
+    @BindView(R.id.img_game)
     ImageView imgGameBox;
 
     Game currentGame;

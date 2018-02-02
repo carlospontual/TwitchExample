@@ -13,7 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
  */
 public class RetrofitClient {
 
-    private static final String BASE_URL = "https://api.twitch.tv/kraken/";
+    private static final String BASE_URL = "https://api.twitch.tv/helix/";
 
     private final Retrofit retrofit;
 

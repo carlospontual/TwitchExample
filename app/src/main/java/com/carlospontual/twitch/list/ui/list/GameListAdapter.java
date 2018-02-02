@@ -17,7 +17,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -87,9 +87,9 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
     }
 
     public class GameViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.img_game)
+        @BindView(R.id.img_game)
         ImageView cover;
-        @Bind(R.id.txt_game_title)
+        @BindView(R.id.txt_game_title)
         TextView title;
         Game game;
 
